@@ -28,8 +28,10 @@ html, body {
   height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
+  background-color: white;
 }
 #app {
+  background-color: white;
   height: 100%;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
