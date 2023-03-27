@@ -30,6 +30,11 @@ import swiper from "@/components/Swiper.vue";
 // const router = useRouter();
 import Recommand from "../components/Recommond.vue";
 import BookTab from "../components/BookTab.vue";
+import picture from "/src/assets/1.jpeg";
+import picture2 from "/src/assets/2.jpeg";
+import picture3 from "/src/assets/3.jpeg";
+import logoIcon from "/src/assets/book.svg";
+import logoIconActive from "/src/assets/book-active.svg"
 export default {
   components: {
     Recommand,
@@ -42,9 +47,9 @@ export default {
         { id: 2, name: "其他"}
       ],
       swiperList: [
-        { id: 1, imageUrl: "./src/static/1.jpeg", url: "#" },
-        { id: 2, imageUrl: "./src/static/2.jpeg", url: "#" },
-        { id: 3, imageUrl: "./src/static/3.jpeg", url: "#" },
+        { id: 1, imageUrl: picture, url: "#" },
+        { id: 2, imageUrl: picture2, url: "#" },
+        { id: 3, imageUrl: picture3, url: "#" },
       ], // Carousel list
       isLogin: false,
       headerScroll: false, // 滚动透明判断
@@ -59,7 +64,7 @@ export default {
     author: 'Nicholas C. Zakas',
     category: '计算机科学',
     price: '89.00',
-    image: "./src/static/1.jpeg"
+    image: picture
   },
   {
     id: 2,
@@ -67,7 +72,7 @@ export default {
     author: '上野宣',
     category: '计算机科学',
     price: '49.00',
-    image:"./src/static/1.jpeg"
+    image: picture
   },
   {
     id: 3,
@@ -75,7 +80,7 @@ export default {
     author: 'Robert Sedgewick / Kevin Wayne',
     category: '计算机科学',
     price: '98.00',
-    image: "./src/static/1.jpeg"
+    image: picture
   },
   {
     id: 4,
@@ -83,7 +88,7 @@ export default {
     author: 'David A. Patterson / John L. Hennessy',
     category: '计算机科学',
     price: '99.00',
-    image:"./src/static/1.jpeg"
+    image: picture
   },
   {
     id: 5,
@@ -91,7 +96,7 @@ export default {
     author: 'Robert C. Martin',
     category: '计算机科学',
     price: '59.00',
-    image:"./src/static/1.jpeg"
+    image: picture
   },
   {
     id: 6,
@@ -99,7 +104,7 @@ export default {
     author: 'Robert C. Martin',
     category: '计算机科学',
     price: '59.00',
-    image:"./src/static/1.jpeg"
+    image: picture
   },
   {
     id: 7,
@@ -107,7 +112,7 @@ export default {
     author: 'Robert C. Martin',
     category: '计算机科学',
     price: '59.00',
-    image:"./src/static/1.jpeg"
+    image: picture
   },
   {
     id: 8,
@@ -115,7 +120,7 @@ export default {
     author: 'Robert C. Martin',
     category: '计算机科学',
     price: '59.00',
-    image:"./src/static/1.jpeg"
+    image: picture
   },
   {
     id: 9,
@@ -123,7 +128,7 @@ export default {
     author: 'Robert C. Martin',
     category: '计算机科学',
     price: '59.00',
-    image:"./src/static/1.jpeg"
+    image: picture
   },
   {
     id: 10,
@@ -131,7 +136,7 @@ export default {
     author: 'Robert C. Martin',
     category: '其他',
     price: '59.00',
-    image:"./src/static/1.jpeg"
+    image: picture
   }
 ]
 
@@ -146,8 +151,8 @@ export default {
       scrollTop > 100 ? (this.headerScroll = true) : (this.headerScroll = false);
       const logo = document.querySelector(".logo");
       this.headerScroll
-        ? (logo.src = "src/assets/book-active.svg")
-        : (logo.src = "src/assets/book.svg");
+        ? (logo.src = logoIconActive)
+        : (logo.src = logoIcon);
     });
     // const token = getLocal('token')
     // if (token) {
