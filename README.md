@@ -1,8 +1,11 @@
 # BookHub
 Project of DS50 UTBM 2023
 
-![](https://img.shields.io/badge/Vue3-%20-4fc08d?style=for-the-badge&logo=vue.js&logoColor=4fc08d)
-![](https://img.shields.io/badge/Vite-%20-darkblue?style=for-the-badge&logo=vite)
+![](https://img.shields.io/badge/Npm-v9.5.0-CB3837?style=for-the-badge&logo=npm)
+![](https://img.shields.io/badge/Npm-v18.15.0-339933?style=for-the-badge&logo=node.js)
+![](https://img.shields.io/badge/Vue-v3.2.47-4fc08d?style=for-the-badge&logo=vue.js)
+![](https://img.shields.io/badge/Vite-v4.2.0-646CFF?style=for-the-badge&logo=vite)
+![](https://img.shields.io/badge/Pinia-v2.0.33-yellow?style=for-the-badge&logo=pinia)
 
 ### start projet:
 
