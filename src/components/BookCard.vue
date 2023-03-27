@@ -6,7 +6,7 @@
       <div class="book-info">
         <div class="book-name">{{ book.name }}</div>
         <div class="book-author">{{ book.author }}</div>
-        <div class="book-type">{{ book.type }}</div>
+        <div class="book-category">{{ book.category }}</div>
         <div class="book-price">{{ book.price }}</div>
       </div>
     </div>
@@ -82,7 +82,7 @@
     text-overflow: ellipsis;
   }
   
-  .book-type {
+  .book-category {
     font-size: 16px;
     color: #666;
     margin-bottom: 10px;

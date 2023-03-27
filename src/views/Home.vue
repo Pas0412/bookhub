@@ -20,24 +20,27 @@
   </div>
   <recommand title="Recent Searched" :books="bookList"></recommand>
   <recommand title="Best selling" :books="bookList"></recommand>
-  <book-list :books="bookList"></book-list>
+  <book-tab :books="bookList" :categories="categories"></book-tab>
   <div style="height: 500px"></div>
 </template>
 
 <script>
 // import { useRouter } from "vue-router";
 import swiper from "@/components/Swiper.vue";
-// import { showLoadingToast, closeToast, showToast } from "vant";
-import BookList from "@/components/BookList.vue";
 // const router = useRouter();
 import Recommand from "../components/Recommond.vue";
+import BookTab from "../components/BookTab.vue";
 export default {
   components: {
-    BookList,
-    Recommand
+    Recommand,
+    BookTab
 },
   data() {
     return {
+      categories: [
+        { id: 1, name: "计算机科学"},
+        { id: 2, name: "其他"}
+      ],
       swiperList: [
         { id: 1, imageUrl: "./src/static/1.jpeg", url: "#" },
         { id: 2, imageUrl: "./src/static/2.jpeg", url: "#" },
@@ -54,7 +57,7 @@ export default {
     id: 1,
     name: 'JavaScript高级程序设计',
     author: 'Nicholas C. Zakas',
-    type: '计算机科学',
+    category: '计算机科学',
     price: '89.00',
     image: "./src/static/1.jpeg"
   },
@@ -62,7 +65,7 @@ export default {
     id: 2,
     name: '图解HTTP',
     author: '上野宣',
-    type: '计算机科学',
+    category: '计算机科学',
     price: '49.00',
     image:"./src/static/1.jpeg"
   },
@@ -70,7 +73,7 @@ export default {
     id: 3,
     name: '算法（第4版）',
     author: 'Robert Sedgewick / Kevin Wayne',
-    type: '计算机科学',
+    category: '计算机科学',
     price: '98.00',
     image: "./src/static/1.jpeg"
   },
@@ -78,7 +81,7 @@ export default {
     id: 4,
     name: '计算机组成与设计 硬件/软件接口',
     author: 'David A. Patterson / John L. Hennessy',
-    type: '计算机科学',
+    category: '计算机科学',
     price: '99.00',
     image:"./src/static/1.jpeg"
   },
@@ -86,7 +89,7 @@ export default {
     id: 5,
     name: '代码整洁之道',
     author: 'Robert C. Martin',
-    type: '计算机科学',
+    category: '计算机科学',
     price: '59.00',
     image:"./src/static/1.jpeg"
   },
@@ -94,7 +97,7 @@ export default {
     id: 6,
     name: '代码整洁之道',
     author: 'Robert C. Martin',
-    type: '计算机科学',
+    category: '计算机科学',
     price: '59.00',
     image:"./src/static/1.jpeg"
   },
@@ -102,7 +105,7 @@ export default {
     id: 7,
     name: '代码整洁之道',
     author: 'Robert C. Martin',
-    type: '计算机科学',
+    category: '计算机科学',
     price: '59.00',
     image:"./src/static/1.jpeg"
   },
@@ -110,7 +113,7 @@ export default {
     id: 8,
     name: '代码整洁之道',
     author: 'Robert C. Martin',
-    type: '计算机科学',
+    category: '计算机科学',
     price: '59.00',
     image:"./src/static/1.jpeg"
   },
@@ -118,7 +121,7 @@ export default {
     id: 9,
     name: '代码整洁之道',
     author: 'Robert C. Martin',
-    type: '计算机科学',
+    category: '计算机科学',
     price: '59.00',
     image:"./src/static/1.jpeg"
   },
@@ -126,7 +129,7 @@ export default {
     id: 10,
     name: '代码整洁之道',
     author: 'Robert C. Martin',
-    type: '计算机科学',
+    category: '其他',
     price: '59.00',
     image:"./src/static/1.jpeg"
   }
