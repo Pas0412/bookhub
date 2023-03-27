@@ -11,6 +11,7 @@ Project of DS50 UTBM 2023 ：Web e-commerce with recommandation algorithm
 ![](https://img.shields.io/badge/Vite-v4.2.0-646CFF?style=for-the-badge&logo=vite)
 ![](https://img.shields.io/badge/Pinia-v2.0.33-yellow?style=for-the-badge&logo=pinia)
 ![](https://img.shields.io/badge/Vant-v4.1.0-lightblue?style=for-the-badge&logo=vant)
+![](https://img.shields.io/badge/Less-v4.1.3-1D365D?style=for-the-badge&logo=less)
 
 ## START PROJECT:
 
@@ -31,17 +32,17 @@ npm run build
 ###  HOME PAGE
 
 ## DEPENDENCIES
-```bash
-#vue-router
+``` bash
+# vue-router
 npm install vue-router@4.0 
 
-#less
+# less
 npm i less-loader less --save-dev
 
-#pinia
+# pinia
 npm install pinia -D
 
-#vant
+# vant
 npm i vant
 
 npm install lib-flexible --save
