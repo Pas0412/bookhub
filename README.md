@@ -8,15 +8,12 @@ Project of DS50 UTBM 2023
 # install
 npm install
 
-# serve
-npm run serve
+# dev
+npm run dev
 
 # pack
 npm run build
 ```
-
-### ATTETION
-please make sure your localhost:8084 port is available!
 
 ## PAGE
 
