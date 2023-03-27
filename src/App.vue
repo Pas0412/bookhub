@@ -11,6 +11,11 @@ const router = useRouter()
 const state = reactive({
   transitionName: 'slide-left'
 })
+export default{
+  components: {
+    RouterView
+  }
+}
 // router.beforeEach((to, from) => {
 //   if (to.meta.index > from.meta.index) {
 //     state.transitionName = 'slide-left' // 向左滑动
