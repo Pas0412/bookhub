@@ -1,27 +1,29 @@
 <template>
   <div>
-    <header class="home-header wrap" :class="{ active: this.headerScroll }">
-      <img class="logo" src="../assets/book.svg" />
-      <div class="header-search">
-        <span class="app-name">BookHub</span>
-        <i class="iconfont icon-search"></i>
-        <router-link tag="span" class="search-title" to="./home"
-          >Search</router-link
+    <div>
+      <header class="home-header wrap" :class="{ active: this.headerScroll }">
+        <img class="logo" src="../assets/book.svg" />
+        <div class="header-search">
+          <span class="app-name">BookHub</span>
+          <i class="iconfont icon-search"></i>
+          <router-link tag="span" class="search-title" to="./home"
+            >Search</router-link
+          >
+        </div>
+        <router-link class="login" tag="span" to="#" v-if="!isLogin"
+          >Login</router-link
         >
-      </div>
-      <router-link class="login" tag="span" to="#" v-if="!isLogin"
-        >Login</router-link
-      >
-      <router-link class="login" tag="span" to="#" v-else>
-        <van-icon name="manager-o" />
-      </router-link>
-    </header>
-    <swiper :list="swiperList"></swiper>
+        <router-link class="login" tag="span" to="#" v-else>
+          <van-icon name="manager-o" />
+        </router-link>
+      </header>
+      <swiper :list="swiperList"></swiper>
+    </div>
+    <recommand title="Recent Searched" :books="bookList"></recommand>
+    <recommand title="Best selling" :books="bookList"></recommand>
+    <book-tab :books="bookList" :categories="categories"></book-tab>
+    <backto-top class="back-top" :isVisible="this.isVisible"></backto-top>
   </div>
-  <recommand title="Recent Searched" :books="bookList"></recommand>
-  <recommand title="Best selling" :books="bookList"></recommand>
-  <book-tab :books="bookList" :categories="categories"></book-tab>
-  <div style="height: 500px"></div>
 </template>
 
 <script>
@@ -34,17 +36,20 @@ import picture from "/src/assets/1.jpeg";
 import picture2 from "/src/assets/2.jpeg";
 import picture3 from "/src/assets/3.jpeg";
 import logoIcon from "/src/assets/book.svg";
-import logoIconActive from "/src/assets/book-active.svg"
+import logoIconActive from "/src/assets/book-active.svg";
+import BacktoTop from "../components/BacktoTop.vue";
 export default {
   components: {
     Recommand,
-    BookTab
-},
+    BookTab,
+    BacktoTop,
+  },
   data() {
     return {
+      isVisible: false,
       categories: [
-        { id: 1, name: "计算机科学"},
-        { id: 2, name: "其他"}
+        { id: 1, name: "计算机科学" },
+        { id: 2, name: "其他" },
       ],
       swiperList: [
         { id: 1, imageUrl: picture, url: "#" },
@@ -58,88 +63,87 @@ export default {
       recommends: [],
       loading: true,
       bookList: [
-  {
-    id: 1,
-    name: 'JavaScript高级程序设计',
-    author: 'Nicholas C. Zakas',
-    category: '计算机科学',
-    price: '89.00',
-    image: picture
-  },
-  {
-    id: 2,
-    name: '图解HTTP',
-    author: '上野宣',
-    category: '计算机科学',
-    price: '49.00',
-    image: picture
-  },
-  {
-    id: 3,
-    name: '算法（第4版）',
-    author: 'Robert Sedgewick / Kevin Wayne',
-    category: '计算机科学',
-    price: '98.00',
-    image: picture
-  },
-  {
-    id: 4,
-    name: '计算机组成与设计 硬件/软件接口',
-    author: 'David A. Patterson / John L. Hennessy',
-    category: '计算机科学',
-    price: '99.00',
-    image: picture
-  },
-  {
-    id: 5,
-    name: '代码整洁之道',
-    author: 'Robert C. Martin',
-    category: '计算机科学',
-    price: '59.00',
-    image: picture
-  },
-  {
-    id: 6,
-    name: '代码整洁之道',
-    author: 'Robert C. Martin',
-    category: '计算机科学',
-    price: '59.00',
-    image: picture
-  },
-  {
-    id: 7,
-    name: '代码整洁之道',
-    author: 'Robert C. Martin',
-    category: '计算机科学',
-    price: '59.00',
-    image: picture
-  },
-  {
-    id: 8,
-    name: '代码整洁之道',
-    author: 'Robert C. Martin',
-    category: '计算机科学',
-    price: '59.00',
-    image: picture
-  },
-  {
-    id: 9,
-    name: '代码整洁之道',
-    author: 'Robert C. Martin',
-    category: '计算机科学',
-    price: '59.00',
-    image: picture
-  },
-  {
-    id: 10,
-    name: '代码整洁之道',
-    author: 'Robert C. Martin',
-    category: '其他',
-    price: '59.00',
-    image: picture
-  }
-]
-
+        {
+          id: 1,
+          name: "JavaScript高级程序设计",
+          author: "Nicholas C. Zakas",
+          category: "计算机科学",
+          price: "89.00",
+          image: picture,
+        },
+        {
+          id: 2,
+          name: "图解HTTP",
+          author: "上野宣",
+          category: "计算机科学",
+          price: "49.00",
+          image: picture,
+        },
+        {
+          id: 3,
+          name: "算法（第4版）",
+          author: "Robert Sedgewick / Kevin Wayne",
+          category: "计算机科学",
+          price: "98.00",
+          image: picture,
+        },
+        {
+          id: 4,
+          name: "计算机组成与设计 硬件/软件接口",
+          author: "David A. Patterson / John L. Hennessy",
+          category: "计算机科学",
+          price: "99.00",
+          image: picture,
+        },
+        {
+          id: 5,
+          name: "代码整洁之道",
+          author: "Robert C. Martin",
+          category: "计算机科学",
+          price: "59.00",
+          image: picture,
+        },
+        {
+          id: 6,
+          name: "代码整洁之道",
+          author: "Robert C. Martin",
+          category: "计算机科学",
+          price: "59.00",
+          image: picture,
+        },
+        {
+          id: 7,
+          name: "代码整洁之道",
+          author: "Robert C. Martin",
+          category: "计算机科学",
+          price: "59.00",
+          image: picture,
+        },
+        {
+          id: 8,
+          name: "代码整洁之道",
+          author: "Robert C. Martin",
+          category: "计算机科学",
+          price: "59.00",
+          image: picture,
+        },
+        {
+          id: 9,
+          name: "代码整洁之道",
+          author: "Robert C. Martin",
+          category: "计算机科学",
+          price: "59.00",
+          image: picture,
+        },
+        {
+          id: 10,
+          name: "代码整洁之道",
+          author: "Robert C. Martin",
+          category: "其他",
+          price: "59.00",
+          image: picture,
+        },
+      ],
     };
   },
   mounted() {
@@ -148,11 +152,14 @@ export default {
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop;
-      scrollTop > 100 ? (this.headerScroll = true) : (this.headerScroll = false);
+      scrollTop > 100
+        ? (this.headerScroll = true)
+        : (this.headerScroll = false);
+      scrollTop > 300
+        ? (this.isVisible = true)
+        : (this.isVisible = false);
       const logo = document.querySelector(".logo");
-      this.headerScroll
-        ? (logo.src = logoIconActive)
-        : (logo.src = logoIcon);
+      this.headerScroll ? (logo.src = logoIconActive) : (logo.src = logoIcon);
     });
     // const token = getLocal('token')
     // if (token) {
@@ -252,4 +259,7 @@ export default {
   }
 }
 
+.back-top {
+  display: flex;
+}
 </style>
