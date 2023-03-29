@@ -4,7 +4,7 @@
     <div class="arrow left" @click="slide(-1)">
       <img class="arrow-left" src="../assets/arrow-left.svg" alt="" />
     </div>
-    <div class="recommand-list">
+    <div class="recommand-list" :id="title">
       <div class="recommand-card" v-for="(book, index) in books" :key="index">
         <book-card :book="book"></book-card>
       </div>
@@ -43,7 +43,7 @@ export default {
     slide(direction) {
       const totalPages = Math.ceil(this.books.length / 4);
       const nextIndex = this.currentIndex + direction;
-      const recommandList = document.querySelector(".recommand-list");
+      const recommandList = document.getElementById(this.title);
       if (nextIndex >= 0 && nextIndex < totalPages + 2) {
         this.currentIndex = nextIndex;
         recommandList.style.transform = `translateX(-${nextIndex * 50}% )`;
