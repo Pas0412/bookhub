@@ -10,7 +10,7 @@
             >Search</router-link
           >
         </div>
-        <router-link class="login" tag="span" to="#" v-if="!isLogin"
+        <router-link class="login" tag="span" to="/login" v-if="!isLogin"
           >Login</router-link
         >
         <router-link class="login" tag="span" to="#" v-else>
