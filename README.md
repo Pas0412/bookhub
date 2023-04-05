@@ -8,8 +8,8 @@ Project of DS50 UTBM 2023 ：Web e-commerce with recommandation algorithm
 ![](https://img.shields.io/badge/IDE-VSCODE-007ACC?style=flat&logo=visual-studio-code)
 ![](https://img.shields.io/badge/Platform-MacOS&emsp;Ventura&emsp;13.0.1-000000?style=flat&logo=apple)
 
-![](https://img.shields.io/badge/Node.js-v9.5.0-CB3837?style=for-the-badge&logo=npm)
-![](https://img.shields.io/badge/Npm-v18.15.0-339933?style=for-the-badge&logo=node.js)
+![](https://img.shields.io/badge/Node.js-v18.15.0-CB3837?style=for-the-badge&logo=npm)
+![](https://img.shields.io/badge/Npm-v9.5.0-339933?style=for-the-badge&logo=node.js)
 ![](https://img.shields.io/badge/Vue-v3.2.47-4fc08d?style=for-the-badge&logo=vue.js)
 ![](https://img.shields.io/badge/Vite-v4.2.0-646CFF?style=for-the-badge&logo=vite)
 ![](https://img.shields.io/badge/Pinia-v2.0.33-yellow?style=for-the-badge&logo=pinia)
