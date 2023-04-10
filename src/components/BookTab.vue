@@ -9,6 +9,7 @@
       <book-list style="transform: translateY(100px);" :books="books" :category="category.name"></book-list>
     </van-tab>
   </van-tabs>
+  <div style="height:300px;"></div>
 </template>
 
 <script>
