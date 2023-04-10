@@ -34,6 +34,8 @@ npm run build
 
 ###  HOME PAGE
 
+### USER PAGE
+
 ## DEPENDENCIES
 ``` bash
 # vue-router
