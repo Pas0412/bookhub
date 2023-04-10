@@ -11,11 +11,11 @@
           >
         </div>
         <router-link class="login" tag="span" to="/login" v-if="!isLogin"
-          >Login</router-link
+          ><text>Log in</text></router-link
         >
-        <router-link class="login" tag="span" to="#" v-else>
-          <van-icon name="manager-o" />
-        </router-link>
+        <router-link class="login" tag="span" to="/user" v-else
+          ><text>{{ this.username }}</text></router-link
+        >
       </header>
       <swiper :list="swiperList"></swiper>
     </div>
@@ -38,6 +38,7 @@ import picture3 from "/src/assets/3.jpeg";
 import logoIcon from "/src/assets/book.svg";
 import logoIconActive from "/src/assets/book-active.svg";
 import BacktoTop from "../components/BacktoTop.vue";
+import { userStore } from "../store/user";
 export default {
   components: {
     Recommand,
@@ -46,6 +47,7 @@ export default {
   },
   data() {
     return {
+      username: '', 
       isVisible: false,
       categories: [
         { id: 1, name: "计算机科学" },
@@ -147,6 +149,9 @@ export default {
     };
   },
   mounted() {
+    const user = userStore();
+    this.isLogin = user.isLoggedIn;
+    this.username = user.user.username;
     document.body.addEventListener("scroll", () => {
       let scrollTop =
         window.pageYOffset ||
@@ -155,39 +160,12 @@ export default {
       scrollTop > 100
         ? (this.headerScroll = true)
         : (this.headerScroll = false);
-      scrollTop > 300
-        ? (this.isVisible = true)
-        : (this.isVisible = false);
+      scrollTop > 300 ? (this.isVisible = true) : (this.isVisible = false);
       const logo = document.querySelector(".logo");
       this.headerScroll ? (logo.src = logoIconActive) : (logo.src = logoIcon);
     });
-    // const token = getLocal('token')
-    // if (token) {
-    //   state.isLogin = true
-    //   // get cart data.
-    //   cart.updateCart()
-    // }
-    // showLoadingToast({
-    //   message: "Loading...",
-    //   forbidClick: true,
-    // });
-    // const { data } = await getHome()
-    // state.swiperList = data.carousels
-    // state.newGoodses = data.newGoodses
-    // state.hots = data.hotGoodses
-    // state.recommends = data.recommendGoodses
-    // loading = false;
-    // closeToast();
   },
 };
-
-// const goToDetail = (item) => {
-//   router.push({ path: `/product/${item.goodsId}` })
-// }
-
-// const tips = () => {
-//   showToast('敬请期待');
-// }
 </script>
 
 <style lang="less" scoped>
@@ -209,12 +187,36 @@ export default {
     height: 30px;
     width: 30px;
   }
+
+  .login {
+  color: @primary;
+  line-height: 36px;
+  margin-right: 20px;
+  border: @primary solid 2px;
+  border-radius: 30px;
+  padding: 0 10px;
+  margin-top: 5px;
+  // justify-content: center;
+  // align-items: ;
+  align-self: center;
+  box-sizing: border-box;
+  // position: relative;
+  // transform: translateY(5px);
+  transition: 0.3s;
+}
+
+.login:hover {
+  letter-spacing: 1px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* 添加阴影 */
+  cursor: pointer;
+}
   &.active {
     background: @primary;
 
     .login {
       color: #fff;
       margin-right: 20px;
+      border-color: #fff;
     }
   }
 
@@ -248,18 +250,19 @@ export default {
     color: #fff;
     font-size: 22px;
   }
-  .login {
-    color: @primary;
-    line-height: 52px;
-    margin-right: 20px;
-    .van-icon-manager-o {
-      font-size: 20px;
-      vertical-align: -3px;
-    }
-  }
 }
 
+
+.login text {
+  font-weight: bold;
+  font-size: 20px;
+}
+van-icon {
+  font-size: 20px;
+  vertical-align: -3px;
+}
 .back-top {
   display: flex;
 }
+
 </style>

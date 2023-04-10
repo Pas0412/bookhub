@@ -9,7 +9,9 @@ import './assets/main.css'
 import './common/style/theme.css'
 const app = createApp(App)
 
-app.use(createPinia())
+const pinia = createPinia();
+app.use(pinia)
+
 app.use(router)
 app.use(Vant)
 

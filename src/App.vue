@@ -1,31 +1,33 @@
 <template>
   <div id="app">
-    <RouterView />
+    <router-view />
   </div>
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue'
-import { useRouter, RouterView } from 'vue-router'
-const router = useRouter()
-const state = reactive({
-  transitionName: 'slide-left'
+import { defineComponent, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { userStore } from './store/user'
+export default defineComponent({
+  name: 'App',
+  setup() {
+    const router = useRouter()
+    const user = userStore()
+
+    onMounted(() => {
+      router.beforeEach((to, from, next) => {
+        user.checkLogin();
+        if (to.meta.requiresAuth && !user.isLoggedIn) {
+          next({ path: '/login' })
+        } else {
+          next()
+        }
+      })
+    })
+
+    return {}
+  },
 })
-export default{
-  components: {
-    RouterView
-  }
-}
-// router.beforeEach((to, from) => {
-//   if (to.meta.index > from.meta.index) {
-//     state.transitionName = 'slide-left' // 向左滑动
-//   } else if (to.meta.index < from.meta.index) {
-//     // 由次级到主级
-//     state.transitionName = 'slide-right'
-//   } else {
-//     state.transitionName = ''   // 同级无过渡效果
-//   }
-// })
 </script>
 
 <style lang="less">

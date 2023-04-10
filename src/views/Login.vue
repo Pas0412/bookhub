@@ -21,6 +21,8 @@ import { reactive } from 'vue';
 import { login } from '@/service/user'
 import md5 from 'js-md5'
 import router from '../router/index'
+import { userStore } from '../store/user'
+const user = userStore();
 const state = reactive({
     username: '',
     password: ''
@@ -32,6 +34,7 @@ const onSubmit = async (values) => {
      "password": md5(values.password)
     })
     if(data.code === 200){
+        user.login(values.username, md5(values.password));
         router.push('/')
     }
 }
