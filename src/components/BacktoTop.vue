@@ -15,10 +15,8 @@
     },
     methods: {
         scrollToTop(){
-          window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
+          console.log('trigger backToTop');
+          document.body.scrollTop = document.documentElement.scrollTop = 0;
         }
     }
   };

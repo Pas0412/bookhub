@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import { getCartList } from '../service/cart';
+// import { getUserId } from '../store/user';
 export default {
     name: "cart",
   data() {
@@ -64,7 +66,11 @@ export default {
           quantity: 1,
         },
       ],
+      cartList: []
     };
+  },
+  mounted() {
+    // this.cartList = getCartList(getUserId);
   },
   computed: {
     cartTotal() {
