@@ -13,6 +13,7 @@
   </template>
   
   <script>
+  import router from '../router';
   export default {
     props: {
       book: {
@@ -23,6 +24,16 @@
     methods: {
       handleClick() {
         // do something on card click
+        console.log('clicked');
+        // this.$router.push({ name: 'detail', params: { id: this.book.id } });
+        // this.$router.push('/detail');
+        
+        this.$nextTick(() => {
+          // router.push('detail');
+          console.log(this.book.id)
+          this.$router.push({ name: 'detail', params: { id: this.book.id } });
+          // this.$router.push({ name: 'detail', params: { product: this.book } });
+        });
       }
     }
   }

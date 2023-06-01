@@ -10,6 +10,7 @@ export const userStore = defineStore('user', {
             // 这里可以调用API进行用户登录验证
             // 如果登录成功，则将用户信息存储到state中
             this.user = {
+                // id,
                 username,
                 password,
             };
@@ -17,6 +18,9 @@ export const userStore = defineStore('user', {
             localStorage.setItem('isLoggedIn', 'true')
             localStorage.setItem('user', JSON.stringify(this.user))
         },
+        // getUserId() {
+        //     return this.user.id? this.user.id : -1;
+        // },
         logout() {
             // 将用户信息从state中删除
             this.user = null;

@@ -34,6 +34,7 @@ const onSubmit = async (values) => {
      "password": md5(values.password)
     })
     if(data.code === 200){
+        console.log('user login sucess');
         user.login(values.username, md5(values.password));
         router.push('/')
     }

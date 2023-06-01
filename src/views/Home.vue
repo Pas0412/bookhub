@@ -6,7 +6,7 @@
         <div class="header-search">
           <span class="app-name">BookHub</span>
           <i class="iconfont icon-search"></i>
-          <router-link tag="span" class="search-title" to="./home"
+          <router-link tag="span" class="search-title" to="./search"
             >Search</router-link
           >
         </div>
@@ -38,7 +38,8 @@ import picture3 from "/src/assets/3.jpeg";
 import logoIcon from "/src/assets/book.svg";
 import logoIconActive from "/src/assets/book-active.svg";
 import BacktoTop from "../components/BacktoTop.vue";
-import { userStore } from "../store/user";
+import { userStore } from "../store/user"; 
+import { getAllCategories } from "../service/categories";
 export default {
   components: {
     Recommand,
@@ -50,8 +51,6 @@ export default {
       username: '', 
       isVisible: false,
       categories: [
-        { id: 1, name: "计算机科学" },
-        { id: 2, name: "其他" },
       ],
       swiperList: [
         { id: 1, imageUrl: picture, url: "#" },
@@ -149,9 +148,13 @@ export default {
     };
   },
   mounted() {
+    //user
     const user = userStore();
     this.isLogin = user.isLoggedIn;
-    this.username = user.user.username;
+    if(this.isLogin) this.username = user.user.username;
+    //category
+    this.fetchCategories();
+    //scoll event
     document.body.addEventListener("scroll", () => {
       let scrollTop =
         window.pageYOffset ||
@@ -165,6 +168,17 @@ export default {
       this.headerScroll ? (logo.src = logoIconActive) : (logo.src = logoIcon);
     });
   },
+  methods: {
+    async fetchCategories() {
+      try {
+        const response = await getAllCategories();
+        this.categories = response;
+      } catch (error) {
+        console.error(error);
+        // 处理错误
+      }
+    },
+  }
 };
 </script>
 
