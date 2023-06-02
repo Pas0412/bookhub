@@ -1,5 +1,27 @@
 import axios from '../utils/axios'
 
+export function getAllBooks() {
+    return axios.post('/all/')
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return [];
+    });
+}
+
+export function getBookDetail(params) {
+    return axios.post('/detail/', params)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return [];
+    });
+}
+
 export function getMostRated(params) {
     return axios.get('/rated/', params);
 }

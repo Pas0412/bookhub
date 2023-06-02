@@ -2,7 +2,7 @@
   <div>
     <div>
       <header class="home-header wrap" :class="{ active: this.headerScroll }">
-        <img class="logo" src="../assets/book.svg" />
+        <img class="logo" src="../assets/book.svg" id="logo"/>
         <div class="header-search">
           <span class="app-name">BookHub</span>
           <i class="iconfont icon-search"></i>
@@ -19,8 +19,8 @@
       </header>
       <swiper :list="swiperList"></swiper>
     </div>
-    <recommand title="Recent Searched" :books="bookList"></recommand>
-    <recommand title="Best selling" :books="bookList"></recommand>
+    <recommand title="Most Popular" :books="bookList"></recommand>
+    <recommand title="Most Rated" :books="bookList"></recommand>
     <book-tab :books="bookList" :categories="categories"></book-tab>
     <backto-top class="back-top" :isVisible="this.isVisible"></backto-top>
   </div>
@@ -32,14 +32,15 @@ import swiper from "@/components/Swiper.vue";
 // const router = useRouter();
 import Recommand from "../components/Recommond.vue";
 import BookTab from "../components/BookTab.vue";
-import picture from "/src/assets/1.jpeg";
-import picture2 from "/src/assets/2.jpeg";
-import picture3 from "/src/assets/3.jpeg";
+import picture from "/src/assets/4.jpeg";
+import picture2 from "/src/assets/5.jpeg";
+import picture3 from "/src/assets/6.jpeg";
 import logoIcon from "/src/assets/book.svg";
 import logoIconActive from "/src/assets/book-active.svg";
 import BacktoTop from "../components/BacktoTop.vue";
 import { userStore } from "../store/user"; 
 import { getAllCategories } from "../service/categories";
+import { getAllBooks } from "../service/book";
 export default {
   components: {
     Recommand,
@@ -63,88 +64,7 @@ export default {
       newGoodses: [],
       recommends: [],
       loading: true,
-      bookList: [
-        {
-          id: 1,
-          name: "JavaScript高级程序设计",
-          author: "Nicholas C. Zakas",
-          category: "计算机科学",
-          price: "89.00",
-          image: picture,
-        },
-        {
-          id: 2,
-          name: "图解HTTP",
-          author: "上野宣",
-          category: "计算机科学",
-          price: "49.00",
-          image: picture,
-        },
-        {
-          id: 3,
-          name: "算法（第4版）",
-          author: "Robert Sedgewick / Kevin Wayne",
-          category: "计算机科学",
-          price: "98.00",
-          image: picture,
-        },
-        {
-          id: 4,
-          name: "计算机组成与设计 硬件/软件接口",
-          author: "David A. Patterson / John L. Hennessy",
-          category: "计算机科学",
-          price: "99.00",
-          image: picture,
-        },
-        {
-          id: 5,
-          name: "代码整洁之道",
-          author: "Robert C. Martin",
-          category: "计算机科学",
-          price: "59.00",
-          image: picture,
-        },
-        {
-          id: 6,
-          name: "代码整洁之道",
-          author: "Robert C. Martin",
-          category: "计算机科学",
-          price: "59.00",
-          image: picture,
-        },
-        {
-          id: 7,
-          name: "代码整洁之道",
-          author: "Robert C. Martin",
-          category: "计算机科学",
-          price: "59.00",
-          image: picture,
-        },
-        {
-          id: 8,
-          name: "代码整洁之道",
-          author: "Robert C. Martin",
-          category: "计算机科学",
-          price: "59.00",
-          image: picture,
-        },
-        {
-          id: 9,
-          name: "代码整洁之道",
-          author: "Robert C. Martin",
-          category: "计算机科学",
-          price: "59.00",
-          image: picture,
-        },
-        {
-          id: 10,
-          name: "代码整洁之道",
-          author: "Robert C. Martin",
-          category: "其他",
-          price: "59.00",
-          image: picture,
-        },
-      ],
+      bookList: [],
     };
   },
   mounted() {
@@ -154,6 +74,8 @@ export default {
     if(this.isLogin) this.username = user.user.username;
     //category
     this.fetchCategories();
+    //bookList
+    this.fetchAllBooks();
     //scoll event
     document.body.addEventListener("scroll", () => {
       let scrollTop =
@@ -164,8 +86,10 @@ export default {
         ? (this.headerScroll = true)
         : (this.headerScroll = false);
       scrollTop > 300 ? (this.isVisible = true) : (this.isVisible = false);
-      const logo = document.querySelector(".logo");
-      this.headerScroll ? (logo.src = logoIconActive) : (logo.src = logoIcon);
+      const logo = document.getElementById("logo");
+      if(logo){
+        this.headerScroll ? (logo.src = logoIconActive) : (logo.src = logoIcon);
+      }
     });
   },
   methods: {
@@ -173,6 +97,15 @@ export default {
       try {
         const response = await getAllCategories();
         this.categories = response;
+      } catch (error) {
+        console.error(error);
+        // 处理错误
+      }
+    },
+    async fetchAllBooks() {
+      try {
+        const response = await getAllBooks();
+        this.bookList = response;
       } catch (error) {
         console.error(error);
         // 处理错误

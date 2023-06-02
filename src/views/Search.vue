@@ -11,99 +11,38 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { Search } from '@element-plus/icons-vue'
 import Books from '@/components/Books.vue'
 import picture from "/src/assets/1.jpeg";
 import router from "../router";
+import { getAllBooks } from "../service/book";
 const input = ref("");
 
 function returnToHome() {
   router.push('/home');
 };
 
-const booklist = [
-        {
-          id: 1,
-          name: "JavaScript高级程序设计",
-          author: "Nicholas C. Zakas",
-          category: "计算机科学",
-          price: "89.00",
-          image: picture,
-        },
-        {
-          id: 2,
-          name: "图解HTTP",
-          author: "上野宣",
-          category: "计算机科学",
-          price: "49.00",
-          image: picture,
-        },
-        {
-          id: 3,
-          name: "算法（第4版）",
-          author: "Robert Sedgewick / Kevin Wayne",
-          category: "计算机科学",
-          price: "98.00",
-          image: picture,
-        },
-        {
-          id: 4,
-          name: "计算机组成与设计 硬件/软件接口",
-          author: "David A. Patterson / John L. Hennessy",
-          category: "计算机科学",
-          price: "99.00",
-          image: picture,
-        },
-        {
-          id: 5,
-          name: "代码整洁之道",
-          author: "Robert C. Martin",
-          category: "计算机科学",
-          price: "59.00",
-          image: picture,
-        },
-        {
-          id: 6,
-          name: "代码整洁之道",
-          author: "Robert C. Martin",
-          category: "计算机科学",
-          price: "59.00",
-          image: picture,
-        },
-        {
-          id: 7,
-          name: "代码整洁之道",
-          author: "Robert C. Martin",
-          category: "计算机科学",
-          price: "59.00",
-          image: picture,
-        },
-        {
-          id: 8,
-          name: "代码整洁之道",
-          author: "Robert C. Martin",
-          category: "计算机科学",
-          price: "59.00",
-          image: picture,
-        },
-        {
-          id: 9,
-          name: "代码整洁之道",
-          author: "Robert C. Martin",
-          category: "计算机科学",
-          price: "59.00",
-          image: picture,
-        },
-        {
-          id: 10,
-          name: "代码整洁之道",
-          author: "Robert C. Martin",
-          category: "其他",
-          price: "59.00",
-          image: picture,
-        },
-    ];
+const fetchData = async () => {
+    try {
+      // 执行异步操作
+      const response = await getAllBooks();
+      const data = response;
+
+      // 更新数据
+      booklist.value = data;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const booklist = ref([]);
+
+  // 在组件加载时执行异步操作
+  onMounted(async () => {
+  await fetchData(); // 等待数据获取完成
+});
+
 </script>
 <style scoped>
 .search-container {

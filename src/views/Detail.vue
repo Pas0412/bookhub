@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="header">
-      <img class="logo" src="../assets/book-active.svg" @click="returnToHome"/>
+      <img class="detail-logo" src="../assets/book-active.svg" @click="returnToHome" />
       Book Detail
       <router-link class="login" tag="span" to="/login" v-if="!isLogin"
         ><text>Log in</text></router-link
@@ -11,9 +11,9 @@
       >
     </div>
     <div class="product-container">
-      <img :src="product.image" :alt="product.name" />
+      <img :src="product.img_s" :alt="product.name" />
       <div class="context">
-        <h1>{{ product.name }}</h1>
+        <h1>{{ product.title }}</h1>
         <p>{{ product.category }}</p>
         <p>Author: {{ product.author }}</p>
         <p>Price: {{ product.price }}</p>
@@ -26,126 +26,61 @@
 
 <script>
 import Books from "../components/Books.vue";
-import picture from "/src/assets/1.jpeg";
 import { userStore } from "../store/user";
 import router from "../router";
+import { getAllBooks, getBookDetail } from "../service/book";
+
 export default {
-    props: {
-        id: {
-            type: Number,
-            required: true,
-        },
+  props: {
+    id: {
+      type: String,
+      required: true,
     },
-    data() {
-        return {
-            product: {
-                id: 1,
-                name: "JavaScript高级程序设计",
-                author: "Nicholas C. Zakas",
-                category: "计算机科学",
-                price: "89.00",
-                image: picture,
-            },
-            isLogin: false,
-            booklist : [
-        {
-          id: 1,
-          name: "JavaScript高级程序设计",
-          author: "Nicholas C. Zakas",
-          category: "计算机科学",
-          price: "89.00",
-          image: picture,
-        },
-        {
-          id: 2,
-          name: "图解HTTP",
-          author: "上野宣",
-          category: "计算机科学",
-          price: "49.00",
-          image: picture,
-        },
-        {
-          id: 3,
-          name: "算法（第4版）",
-          author: "Robert Sedgewick / Kevin Wayne",
-          category: "计算机科学",
-          price: "98.00",
-          image: picture,
-        },
-        {
-          id: 4,
-          name: "计算机组成与设计 硬件/软件接口",
-          author: "David A. Patterson / John L. Hennessy",
-          category: "计算机科学",
-          price: "99.00",
-          image: picture,
-        },
-        {
-          id: 5,
-          name: "代码整洁之道",
-          author: "Robert C. Martin",
-          category: "计算机科学",
-          price: "59.00",
-          image: picture,
-        },
-        {
-          id: 6,
-          name: "代码整洁之道",
-          author: "Robert C. Martin",
-          category: "计算机科学",
-          price: "59.00",
-          image: picture,
-        },
-        {
-          id: 7,
-          name: "代码整洁之道",
-          author: "Robert C. Martin",
-          category: "计算机科学",
-          price: "59.00",
-          image: picture,
-        },
-        {
-          id: 8,
-          name: "代码整洁之道",
-          author: "Robert C. Martin",
-          category: "计算机科学",
-          price: "59.00",
-          image: picture,
-        },
-        {
-          id: 9,
-          name: "代码整洁之道",
-          author: "Robert C. Martin",
-          category: "计算机科学",
-          price: "59.00",
-          image: picture,
-        },
-        {
-          id: 10,
-          name: "代码整洁之道",
-          author: "Robert C. Martin",
-          category: "其他",
-          price: "59.00",
-          image: picture,
-        },
-    ]
-        };
+  },
+  data() {
+    return {
+      product: {},
+      isLogin: false,
+      booklist: [],
+    };
+  },
+  mounted() {
+    const user = userStore();
+    this.isLogin = user.isLoggedIn;
+    if (this.isLogin) this.username = user.user.username;
+    //books
+    this.fetchAllBooks();
+    this.fetchBookDetail();
+  },
+  methods: {
+    returnToHome() {
+      router.push("/home");
     },
-    mounted() {
-        const user = userStore();
-        this.isLogin = user.isLoggedIn;
-        if (this.isLogin)
-            this.username = user.user.username;
+    addToCart() {
+      alert("Your product has been");
     },
-    methods: {
-        returnToHome(){
-            router.push('/home');
-        },
-        addToCart() {
-            alert("Your product has been");
-        }
+    async fetchAllBooks() {
+      try {
+        const response = await getAllBooks();
+        this.booklist = response;
+      } catch (error) {
+        console.error(error);
+        // 处理错误
+      }
     },
-    components: { Books }
+    async fetchBookDetail() {
+      try {
+        console.log(this.id);
+        const response = await getBookDetail({ id: this.id });
+        console.log(response)
+        this.product = response;
+      } catch (error) {
+        console.error(error);
+        // 处理错误
+      }
+    },
+  },
+  components: { Books },
 };
 </script>
 
@@ -169,7 +104,7 @@ export default {
   font-size: 20px;
   font-weight: bold;
 }
-.logo {
+.detail-logo {
   margin: 10px 10px 10px 50px;
   height: 30px;
   width: 30px;
@@ -206,5 +141,9 @@ export default {
 .product-container img {
   width: 220px;
   height: 300px;
+}
+
+.context p {
+  margin: 30px 0;
 }
 </style>

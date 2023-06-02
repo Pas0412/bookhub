@@ -1,13 +1,13 @@
 <template>
     <div class="book-card" @click="handleClick">
       <div class="book-image">
-        <img :src="book.image" alt="">
+        <img :src="book.img_s" alt="">
       </div>
       <div class="book-info">
-        <div class="book-name">{{ book.name }}</div>
+        <div class="book-name">{{ book.title }}</div>
         <div class="book-author">{{ book.author }}</div>
         <div class="book-category">{{ book.category }}</div>
-        <div class="book-price">{{ book.price }}</div>
+        <div class="book-price">{{ 'Price: ' + book.price }}</div>
       </div>
     </div>
   </template>
@@ -30,8 +30,8 @@
         
         this.$nextTick(() => {
           // router.push('detail');
-          console.log(this.book.id)
-          this.$router.push({ name: 'detail', params: { id: this.book.id } });
+          console.log(this.book.bookId)
+          this.$router.push({ name: 'detail', params: { id: this.book.bookId } });
           // this.$router.push({ name: 'detail', params: { product: this.book } });
         });
       }
