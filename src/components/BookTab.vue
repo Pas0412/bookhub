@@ -6,7 +6,7 @@
       :key="category.id"
       :title="category.name"
     >
-      <book-list style="transform: translateY(100px);" :books="books" :category="category.name"></book-list>
+      <book-list style="transform: translateY(100px);" :category="category.name"></book-list>
     </van-tab>
   </van-tabs>
   <div style="height:300px;"></div>
@@ -19,10 +19,6 @@ export default {
     BookList,
   },
   props: {
-    books: {
-      type: Array,
-      require: true,
-    },
     categories: {
       type: Array,
       require: true,
@@ -32,7 +28,7 @@ export default {
     return{
         active: 1
     }
-  }
+  },
 };
 </script>
 

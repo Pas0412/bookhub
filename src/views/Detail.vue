@@ -1,7 +1,11 @@
 <template>
   <div class="container">
     <div class="header">
-      <img class="detail-logo" src="../assets/book-active.svg" @click="returnToHome" />
+      <img
+        class="detail-logo"
+        src="../assets/book-active.svg"
+        @click="returnToHome"
+      />
       Book Detail
       <router-link class="login" tag="span" to="/login" v-if="!isLogin"
         ><text>Log in</text></router-link
@@ -17,6 +21,15 @@
         <p>{{ product.category }}</p>
         <p>Author: {{ product.author }}</p>
         <p>Price: {{ product.price }}</p>
+        <el-rate
+          v-model="value"
+          disabled
+          show-score
+          text-color="#ff9900"
+          score-template="{value} points"
+          :colors="colors"
+          style="margin-bottom: 10px"
+        />
         <el-button @click="addToCart" type="warning">Add to Cart</el-button>
       </div>
     </div>
@@ -31,17 +44,14 @@ import router from "../router";
 import { getAllBooks, getBookDetail } from "../service/book";
 
 export default {
-  props: {
-    id: {
-      type: String,
-      required: true,
-    },
-  },
+  props: {},
   data() {
     return {
       product: {},
       isLogin: false,
       booklist: [],
+      value: 3.7,
+      colors: ["#99A9BF", "#F7BA2A", "#FF9900"],
     };
   },
   mounted() {
@@ -70,10 +80,14 @@ export default {
     },
     async fetchBookDetail() {
       try {
+        const vid = localStorage.getItem("detail");
+        console.log("vid" + vid);
+        this.id = vid;
         console.log(this.id);
         const response = await getBookDetail({ id: this.id });
-        console.log(response)
+        console.log(response);
         this.product = response;
+        this.value = response.rate;
       } catch (error) {
         console.error(error);
         // 处理错误
@@ -137,13 +151,17 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  gap: 30px;
 }
 .product-container img {
   width: 220px;
   height: 300px;
 }
-
+.context {
+  display: flex;
+  flex-direction: column;
+}
 .context p {
-  margin: 30px 0;
+  margin: 10px 0;
 }
 </style>

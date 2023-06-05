@@ -1,7 +1,7 @@
 import axios from '../utils/axios'
 
-export function getAllBooks() {
-    return axios.post('/all/')
+export function getAllBooks(params) {
+    return axios.post('/all/', params)
     .then((response) => {
       return response.data;
     })
@@ -23,7 +23,14 @@ export function getBookDetail(params) {
 }
 
 export function getMostRated(params) {
-    return axios.get('/rated/', params);
+  return axios.post('/rated/', params)
+  .then((response) => {
+    return response.data;
+  })
+  .catch((error) => {
+    console.error(error);
+    return [];
+  });
 }
 
 export function getMostPopular(params) {

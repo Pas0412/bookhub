@@ -4,20 +4,22 @@
       title="My Cart"
     />
     <van-empty
-      v-if="cartProducts.length === 0"
+      v-if="cartList.length === 0"
       description="Your cart is empty."
     />
     <van-list v-else>
       <van-cell
-        v-for="product in cartProducts"
-        :key="product.id"
-        :title="product.title"
-        :label="product.price"
+        v-for="product in cartList"
+        :key="product.book_id"
+        :title="'Book title : ' + product.title"
+        :label="'Book price : ' + product.price"
         :is-link="true"
-        @click="goToProductDetails(product)"
+        style="padding-left: 100px;font-weight: 700;font-size: 30px;line-height: 40px;"
       >
-        <img :src="product.image" class="product-image" slot="icon" />
-        <van-stepper v-model="product.quantity" :min="1" show-plus-minus />
+        <img :src="product.img_s" class="product-image" slot="icon" 
+        @click="goToProductDetails(product.book_id)"
+        />
+        <van-stepper v-model="product.count" :min="1" show-plus-minus @change="handleChange($event, product)"/>
         <van-button
           class="remove-from-cart-btn"
           size="small"
@@ -44,56 +46,72 @@
 </template>
 
 <script>
-import { getCartList } from '../service/cart';
-// import { getUserId } from '../store/user';
+import { nextTick } from 'vue';
+import { getCartList, removeCartList, setCartList } from '../service/cart';
+import { userStore } from '../store/user';
 export default {
     name: "cart",
   data() {
     return {
-      cartProducts: [
-        {
-          id: 1,
-          title: "Product 1",
-          price: 9.99,
-          image: "https://via.placeholder.com/150",
-          quantity: 1,
-        },
-        {
-          id: 2,
-          title: "Product 2",
-          price: 19.99,
-          image: "https://via.placeholder.com/150",
-          quantity: 1,
-        },
-      ],
+      user_id: -1,
+      cartProducts: [],
       cartList: []
     };
   },
   mounted() {
-    // this.cartList = getCartList(getUserId);
+    const user = userStore();
+    this.user_id = user.user.id;
+    console.log(this.user_id);
+    this.fetchCart();
   },
   computed: {
     cartTotal() {
-      return this.cartProducts.reduce(
-        (total, product) => total + product.price * product.quantity,
+      return this.cartList.reduce(
+        (total, product) => total + product.price * product.count,
         0
       );
     },
   },
   methods: {
-    removeFromCart(product) {
+    async fetchCart() {
+      try {
+        const response = await getCartList({ id: this.user_id });
+        this.cartList = response;
+        console.log(this.cartList)
+      } catch (error) {
+        console.error(error);
+        // 处理错误
+      }
+    },
+    async removeFromCart(product) {
       // Remove product from cart
       console.log(`Product ${product.title} removed from cart!`);
-      this.cartProducts = this.cartProducts.filter((p) => p.id !== product.id);
+      await removeCartList({ user_id: this.user_id, book_id: product.book_id});
+      this.refreshPage();
     },
-    goToProductDetails(product) {
-      this.$router.push({ name: "ProductDetails", params: { id: product.id } });
+    goToProductDetails(id) {
+      localStorage.setItem('detail', id);
+      this.$router.push({ name: 'detail'});
     },
     goBack() {
       this.$router.go(-1);
     },
+    refreshPage() {
+      nextTick(() => {
+        location.reload();
+      });
+    },
+    async handleChange(event, product) {
+      console.log(product.book_id, typeof(event), typeof(product.book_id))
+      await setCartList({ user_id: this.user_id, book_id: product.book_id, count: event });
+    }
   },
 };
 </script>
 <style scoped>
+.product-image {
+  height: 170px;
+  width: 120px;
+  margin-bottom: 70px;
+}
 </style>

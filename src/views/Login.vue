@@ -29,14 +29,21 @@ const state = reactive({
 })
 
 const onSubmit = async (values) => {
+    console.log("login request sent");
     const data = await login({
      "username": values.username,
      "password": md5(values.password)
     })
+    console.log(data);
     if(data.code === 200){
-        console.log('user login sucess');
-        user.login(values.username, md5(values.password));
+        console.log("login success");
+        console.log(data);
+        console.log(data.data[0].user_id);
+        user.login(data.data[0].user_id, values.username, md5(values.password));
+        console.log(user.user.id);
         router.push('/')
+    }else{
+        console.log('login failed');
     }
 }
 </script>

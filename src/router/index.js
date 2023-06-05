@@ -3,7 +3,7 @@ import Home from '@/views/Home.vue'
 import Login from '@/views/Login.vue'
 import User from '@/views/User.vue'
 import Cart from '@/components/Cart.vue'
-import Favorites from '@/components/Favorites.vue'
+import Favorite from '@/components/Favorite.vue'
 import Search from '@/views/Search.vue'
 import Detail from '@/views/Detail.vue'
 
@@ -49,9 +49,9 @@ const router = createRouter({
           component: Cart,
         },
         {
-          path: 'favorites',
-          name: 'favorites',
-          component: Favorites,
+          path: 'favorite',
+          name: 'favorite',
+          component: Favorite,
         },
       ],
     },

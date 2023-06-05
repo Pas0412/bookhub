@@ -1,9 +1,20 @@
 import axios from '../utils/axios'
 
 export function getCartList(params) {
-    return axios.get('/cart', params);
+    return axios.post('/cart/', params)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return [];
+    });
 }
 
-export function setCartList(data) {
-    return axios.post('/cart', data);
+export function setCartList(params) {
+    return axios.post('/setcart/', params);
+}
+
+export function removeCartList(params) {
+    return axios.post('/removecart/', params);
 }

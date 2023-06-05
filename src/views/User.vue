@@ -37,24 +37,25 @@ export default {
   data() {
     return {
       active: 0,
-      user: Object
+      user: null
     };
   },
   mounted() {
     const store = userStore();
     store.checkLogin();
     this.user = store;
+    const uname = document.querySelector('.username');
+    uname.textContent = this.user.user.username;
     this.handleSidebarChange(this.active);
   },
   methods: {
     handleSidebarChange(activeName) {
-      console.log(activeName);
       if (activeName === 0) {
         this.active = 0;
         this.$router.push({ path: "/user/cart" });
       } else if (activeName === 1) {
         this.active = 1;
-        this.$router.push({ path: "/user/favorites" });
+        this.$router.push({ path: "/user/favorite" });
       }
     },
     handleLogout() {

@@ -15,16 +15,13 @@
 
 <script>
 import BookCard from "@/components/BookCard.vue";
+import { getAllBooks } from "../service/book";
 
 export default {
   components: {
     BookCard,
   },
   props: {
-    books: {
-      type: Array,
-      required: true,
-    },
     category: {
       type: String,
       default: "All",
@@ -36,17 +33,19 @@ export default {
     };
   },
   methods: {
-    sortByCategory(category) {
-      for (let i = 0; i < this.books.length; i++) {
-        if (this.books[i].category == category) {
-          this.booksByCategory.push(this.books[i]);
-        }
+    async fetchAllBooks() {
+      try {
+        console.log(this.category);
+        const response = await getAllBooks({category: this.category});
+        this.booksByCategory = response;
+      } catch (error) {
+        console.error(error);
+        // 处理错误
       }
-      console.log(this.booksByCategory);
     },
   },
   mounted() {
-    this.sortByCategory(this.category);
+    this.fetchAllBooks();
   },
 };
 </script>
