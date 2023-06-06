@@ -1,7 +1,7 @@
 <template>
     <div class="log-in-container">
         <div class="log-in-window">
-            <span class="log-in-title">
+            <span class="log-in-title" @click="backToHome" style="cursor: pointer;">
                     Sign up
             </span>
             <van-form @submit="onSubmit" class="log-in-form">
@@ -12,6 +12,8 @@
 
                 </van-field>
                 <van-button type="primary" native-type="submit">Submit</van-button>
+                <div class="sign-up-title">Already have an account?</div>
+                <div class="sign-up" @click="goToLogin" style="color: blue;cursor: pointer;margin-bottom: 10px;">Log in</div>
             </van-form>
         </div>
     </div>
@@ -41,17 +43,24 @@ const onSubmit = async (values) => {
         alert('username already exist');
     }
 }
+const goToLogin = () => {
+    router.push('/login');
+}
+
+const backToHome = () => {
+    router.push('/')
+}
 </script>
-<style>
+<style scoped>
 :root {
-    --log-in-window-height: 300px;
+    --log-in-window-height: 300px !important;
     --log-in-window-width: 400px;
 }
 .log-in-container {
     width: 100%;
     height: 100%;
     display: block;
-    background: url('/login_background.jpg') center no-repeat;
+    background: url('/sign_up.jpg') center no-repeat;
     position: relative;
 }
 .log-in-window {

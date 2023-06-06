@@ -5,10 +5,7 @@
         <img class="logo" src="../assets/book.svg" id="logo"/>
         <div class="header-search">
           <span class="app-name">BookHub</span>
-          <i class="iconfont icon-search"></i>
-          <router-link tag="span" class="search-title" to="./search"
-            >Search</router-link
-          >
+          <el-input class="search" v-model="searchTerm" placeholder="Search" @keyup.enter="handleSearch"></el-input>
         </div>
         <router-link class="login" tag="span" to="/login" v-if="!isLogin"
           ><text>Log in</text></router-link
@@ -66,7 +63,8 @@ export default {
       loading: true,
       bookList: [],
       mostrated: [],
-      mostpopular: []
+      mostpopular: [],
+      searchTerm: '',
     };
   },
   mounted() {
@@ -97,6 +95,11 @@ export default {
     });
   },
   methods: {
+    handleSearch() {
+      localStorage.setItem('search', this.searchTerm);
+      // 导航到搜索页面
+      this.$router.push('/search');
+    },
     async fetchCategories() {
       try {
         const response = await getAllCategories();
@@ -212,7 +215,12 @@ export default {
   }
 }
 
-
+.search {
+  --el-input-bg-color: transparent;
+  --el-input-border-color: transparent;
+  --el-input-focus-border-color: transparent;
+  --el-input-hover-border-color: transparent;
+}
 .login text {
   font-weight: bold;
   font-size: 20px;

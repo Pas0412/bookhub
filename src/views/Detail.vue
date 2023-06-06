@@ -29,11 +29,18 @@
           score-template="{value} points"
           :colors="colors"
           style="margin-bottom: 10px"
+          v-show="value"
         />
         <el-button @click="addToCart" type="warning">Add to Cart</el-button>
       </div>
-      <img :src="like? '/src/assets/heart-filled.png' : '/src/assets/heart.png'" class="favorite" @click="handleLike">
+      <img
+        v-show="this.isLogin"
+        :src="like ? '/src/assets/heart-filled.png' : '/src/assets/heart.png'"
+        class="favorite"
+        @click="handleLike"
+      />
     </div>
+    <div class="title-recommend">Recommendations based on this book</div>
     <Books :books="booklist"></Books>
   </div>
 </template>
@@ -42,9 +49,13 @@
 import Books from "../components/Books.vue";
 import { userStore } from "../store/user";
 import router from "../router";
-import { getAllBooks, getBookDetail, getRecommendByBook } from "../service/book";
+import {
+  getAllBooks,
+  getBookDetail,
+  getRecommendByBook,
+} from "../service/book";
 import { isfavorite, setfavoriteList } from "../service/favorite";
-import { addCart } from '../service/cart';
+import { addCart } from "../service/cart";
 import Heart from "/src/assets/heart.png";
 import HeartFilled from "/src/assets/heart-filled.png";
 
@@ -57,7 +68,7 @@ export default {
       booklist: [],
       value: 3.7,
       colors: ["#99A9BF", "#F7BA2A", "#FF9900"],
-      like: 0
+      like: 0,
     };
   },
   mounted() {
@@ -65,22 +76,31 @@ export default {
     this.isLogin = user.isLoggedIn;
     if (this.isLogin) this.username = user.user.username;
     //books
-    this.fetchRecommendByBook(localStorage.getItem('detail'));
+    this.fetchRecommendByBook(localStorage.getItem("detail"));
     this.fetchBookDetail();
-    console.log('user: ' + localStorage.getItem('user'));
-    console.log('user: ' + JSON.parse(localStorage.getItem('user')).id);
-    this.fetchIsFavorite(JSON.parse(localStorage.getItem('user')).id, localStorage.getItem('detail'));
+    if (this.isLogin)
+      this.fetchIsFavorite(
+        JSON.parse(localStorage.getItem("user")).id,
+        localStorage.getItem("detail")
+      );
   },
   methods: {
     returnToHome() {
       router.push("/home");
     },
     addToCart() {
-      alert("Your product has been");
-      this.useAddCart();
+      if (this.isLogin) {
+        alert("Your product has been added to cart");
+        this.useAddCart();
+      } else {
+        this.$router.push("/login");
+      }
     },
     async useAddCart() {
-        await addCart({user_id: JSON.parse(localStorage.getItem('user')).id, book_id: localStorage.getItem('detail')});
+      await addCart({
+        user_id: JSON.parse(localStorage.getItem("user")).id,
+        book_id: localStorage.getItem("detail"),
+      });
     },
     async fetchAllBooks() {
       try {
@@ -105,16 +125,16 @@ export default {
     },
     async fetchIsFavorite(user, book) {
       try {
-        const response = await isfavorite({user_id: user, book_id: book});
+        const response = await isfavorite({ user_id: user, book_id: book });
         this.like = response;
       } catch (error) {
         console.error(error);
         // 处理错误
       }
     },
-    async setfavorite(user, book, like){
+    async setfavorite(user, book, like) {
       try {
-        await setfavoriteList({user_id: user, book_id: book, like: like});
+        await setfavoriteList({ user_id: user, book_id: book, like: like });
       } catch (error) {
         console.error(error);
         // 处理错误
@@ -122,7 +142,7 @@ export default {
     },
     async fetchRecommendByBook(book) {
       try {
-        const response = await getRecommendByBook({book_id: book});
+        const response = await getRecommendByBook({ book_id: book });
         this.booklist = response;
       } catch (error) {
         console.error(error);
@@ -130,12 +150,12 @@ export default {
       }
     },
     handleLike() {
-      const heart = document.querySelector('.favorite');
-      this.like? this.like = 0 : this.like = 1;
-      this.like? heart.src= Heart : heart.src= HeartFilled;
-      const userID = JSON.parse(localStorage.getItem('user'));
-      this.setfavorite(userID.id, localStorage.getItem('detail'), this.like);
-    }
+      const heart = document.querySelector(".favorite");
+      this.like ? (this.like = 0) : (this.like = 1);
+      this.like ? (heart.src = Heart) : (heart.src = HeartFilled);
+      const userID = JSON.parse(localStorage.getItem("user"));
+      this.setfavorite(userID.id, localStorage.getItem("detail"), this.like);
+    },
   },
   components: { Books },
 };
@@ -189,7 +209,7 @@ export default {
 
 .product-container {
   width: 80%;
-  height: 500px;
+  height: 400px;
   margin: 70px 0px;
   display: flex;
   flex-direction: row;
@@ -212,5 +232,13 @@ export default {
   height: 30px !important;
   cursor: pointer;
   margin-top: 10px;
+}
+.title-recommend {
+  font-size: 30px;
+  font-weight: bold;
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  margin: 0 0 50px 170px;
 }
 </style>

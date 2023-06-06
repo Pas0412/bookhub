@@ -1,7 +1,7 @@
 <template>
     <div class="log-in-container">
         <div class="log-in-window">
-            <span class="log-in-title">
+            <span class="log-in-title" @click="backToHome" style="cursor: pointer;">
                     Log in
             </span>
             <van-form @submit="onSubmit" class="log-in-form">
@@ -13,7 +13,7 @@
                 </van-field>
                 <van-button type="primary" native-type="submit">Submit</van-button>
                 <div class="sign-up-title">Don't have an account?</div>
-                <div class="sign-up" @click="goToSignUp" style="color: blue;cursor: pointer;">Sign up</div>
+                <div class="sign-up" @click="goToSignUp" style="color: blue;cursor: pointer;margin-bottom: 10px;">Sign up</div>
             </van-form>
         </div>
     </div>
@@ -52,10 +52,14 @@ const onSubmit = async (values) => {
 const goToSignUp = () => {
     router.push('/signup');
 }
+
+const backToHome = () => {
+    router.push('/')
+}
 </script>
 <style>
 :root {
-    --log-in-window-height: 300px;
+    --log-in-window-height: 350px;
     --log-in-window-width: 400px;
 }
 .log-in-container {
@@ -84,6 +88,7 @@ const goToSignUp = () => {
     width: 100%;
     text-align: center;
     justify-content: center;
+    margin-top: 30px;
     margin-bottom: 30px;
     font-weight: bold;
     color: #000;
