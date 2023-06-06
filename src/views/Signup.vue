@@ -2,7 +2,7 @@
     <div class="log-in-container">
         <div class="log-in-window">
             <span class="log-in-title">
-                    Log in
+                    Sign up
             </span>
             <van-form @submit="onSubmit" class="log-in-form">
                 <van-field class="log-in-input" v-model="state.username" placeholder="username" name="username">
@@ -12,15 +12,13 @@
 
                 </van-field>
                 <van-button type="primary" native-type="submit">Submit</van-button>
-                <div class="sign-up-title">Don't have an account?</div>
-                <div class="sign-up" @click="goToSignUp" style="color: blue;cursor: pointer;">Sign up</div>
             </van-form>
         </div>
     </div>
 </template>
 <script setup>
 import { reactive } from 'vue';
-import { login } from '@/service/user'
+import { signup } from '@/service/user'
 import md5 from 'js-md5'
 import router from '../router/index'
 import { userStore } from '../store/user'
@@ -32,25 +30,16 @@ const state = reactive({
 
 const onSubmit = async (values) => {
     console.log("login request sent");
-    const data = await login({
+    const data = await signup({
      "username": values.username,
      "password": md5(values.password)
     })
     console.log(data);
-    if(data.code === 200){
-        console.log("login success");
-        console.log(data);
-        console.log(data.data[0].user_id);
-        user.login(data.data[0].user_id, values.username, md5(values.password));
-        console.log(user.user.id);
-        router.push('/')
+    if(data.message === 'user created'){
+        router.push('/login')
     }else{
-        console.log('login failed');
+        alert('username already exist');
     }
-}
-
-const goToSignUp = () => {
-    router.push('/signup');
 }
 </script>
 <style>

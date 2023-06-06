@@ -11,6 +11,10 @@ export function getCartList(params) {
     });
 }
 
+export function addCart(params) {
+    return axios.post('/addtocart/', params);
+}
+
 export function setCartList(params) {
     return axios.post('/setcart/', params);
 }

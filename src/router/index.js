@@ -6,6 +6,7 @@ import Cart from '@/components/Cart.vue'
 import Favorite from '@/components/Favorite.vue'
 import Search from '@/views/Search.vue'
 import Detail from '@/views/Detail.vue'
+import Signup from '@/views/Signup.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -23,6 +24,11 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: Signup
     },
     {
       path: '/search',

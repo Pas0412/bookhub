@@ -32,6 +32,7 @@
         />
         <el-button @click="addToCart" type="warning">Add to Cart</el-button>
       </div>
+      <img :src="like? '/src/assets/heart-filled.png' : '/src/assets/heart.png'" class="favorite" @click="handleLike">
     </div>
     <Books :books="booklist"></Books>
   </div>
@@ -41,7 +42,11 @@
 import Books from "../components/Books.vue";
 import { userStore } from "../store/user";
 import router from "../router";
-import { getAllBooks, getBookDetail } from "../service/book";
+import { getAllBooks, getBookDetail, getRecommendByBook } from "../service/book";
+import { isfavorite, setfavoriteList } from "../service/favorite";
+import { addCart } from '../service/cart';
+import Heart from "/src/assets/heart.png";
+import HeartFilled from "/src/assets/heart-filled.png";
 
 export default {
   props: {},
@@ -52,6 +57,7 @@ export default {
       booklist: [],
       value: 3.7,
       colors: ["#99A9BF", "#F7BA2A", "#FF9900"],
+      like: 0
     };
   },
   mounted() {
@@ -59,8 +65,11 @@ export default {
     this.isLogin = user.isLoggedIn;
     if (this.isLogin) this.username = user.user.username;
     //books
-    this.fetchAllBooks();
+    this.fetchRecommendByBook(localStorage.getItem('detail'));
     this.fetchBookDetail();
+    console.log('user: ' + localStorage.getItem('user'));
+    console.log('user: ' + JSON.parse(localStorage.getItem('user')).id);
+    this.fetchIsFavorite(JSON.parse(localStorage.getItem('user')).id, localStorage.getItem('detail'));
   },
   methods: {
     returnToHome() {
@@ -68,6 +77,10 @@ export default {
     },
     addToCart() {
       alert("Your product has been");
+      this.useAddCart();
+    },
+    async useAddCart() {
+        await addCart({user_id: JSON.parse(localStorage.getItem('user')).id, book_id: localStorage.getItem('detail')});
     },
     async fetchAllBooks() {
       try {
@@ -81,11 +94,8 @@ export default {
     async fetchBookDetail() {
       try {
         const vid = localStorage.getItem("detail");
-        console.log("vid" + vid);
         this.id = vid;
-        console.log(this.id);
         const response = await getBookDetail({ id: this.id });
-        console.log(response);
         this.product = response;
         this.value = response.rate;
       } catch (error) {
@@ -93,6 +103,39 @@ export default {
         // 处理错误
       }
     },
+    async fetchIsFavorite(user, book) {
+      try {
+        const response = await isfavorite({user_id: user, book_id: book});
+        this.like = response;
+      } catch (error) {
+        console.error(error);
+        // 处理错误
+      }
+    },
+    async setfavorite(user, book, like){
+      try {
+        await setfavoriteList({user_id: user, book_id: book, like: like});
+      } catch (error) {
+        console.error(error);
+        // 处理错误
+      }
+    },
+    async fetchRecommendByBook(book) {
+      try {
+        const response = await getRecommendByBook({book_id: book});
+        this.booklist = response;
+      } catch (error) {
+        console.error(error);
+        // 处理错误
+      }
+    },
+    handleLike() {
+      const heart = document.querySelector('.favorite');
+      this.like? this.like = 0 : this.like = 1;
+      this.like? heart.src= Heart : heart.src= HeartFilled;
+      const userID = JSON.parse(localStorage.getItem('user'));
+      this.setfavorite(userID.id, localStorage.getItem('detail'), this.like);
+    }
   },
   components: { Books },
 };
@@ -163,5 +206,11 @@ export default {
 }
 .context p {
   margin: 10px 0;
+}
+.favorite {
+  width: 30px !important;
+  height: 30px !important;
+  cursor: pointer;
+  margin-top: 10px;
 }
 </style>

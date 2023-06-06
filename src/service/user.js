@@ -10,3 +10,14 @@ export function login(params) {
       return [];
     });
 }
+
+export function signup(params) {
+  return axios.post('/signup/', params)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      console.error(error);
+      return [];
+    });
+}

@@ -34,9 +34,27 @@ export function getMostRated(params) {
 }
 
 export function getMostPopular(params) {
-    return axios.get('/popular/', params);
+  return axios.post('/popular/', params)
+  .then((response) => {
+    return response.data;
+  })
+  .catch((error) => {
+    console.error(error);
+    return [];
+  });
 }
 
 export function getRecommended(params) {
     return axios.get('/recommended/', params);
+}
+
+export function getRecommendByBook(params) {
+  return axios.post('/recommendbybook/', params)
+  .then((response) => {
+    return response.data;
+  })
+  .catch((error) => {
+    console.error(error);
+    return [];
+  });
 }

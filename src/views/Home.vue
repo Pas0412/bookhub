@@ -19,7 +19,7 @@
       </header>
       <swiper :list="swiperList"></swiper>
     </div>
-    <recommand title="Most Popular" :books="mostrated"></recommand>
+    <recommand title="Most Popular" :books="mostpopular"></recommand>
     <recommand title="Most Rated" :books="mostrated"></recommand>
     <book-tab :categories="categories"></book-tab>
     <backto-top class="back-top" :isVisible="this.isVisible"></backto-top>
@@ -40,7 +40,7 @@ import logoIconActive from "/src/assets/book-active.svg";
 import BacktoTop from "../components/BacktoTop.vue";
 import { userStore } from "../store/user"; 
 import { getAllCategories } from "../service/categories";
-import { getAllBooks, getMostRated } from "../service/book";
+import { getMostRated, getMostPopular } from "../service/book";
 export default {
   components: {
     Recommand,
@@ -65,7 +65,8 @@ export default {
       recommends: [],
       loading: true,
       bookList: [],
-      mostrated: []
+      mostrated: [],
+      mostpopular: []
     };
   },
   mounted() {
@@ -75,8 +76,10 @@ export default {
     if(this.isLogin) this.username = user.user.username;
     //category
     this.fetchCategories();
-    //mostrated
+    //most rated
     this.fetchMostRated();
+    //most popular
+    this.fetchMostPopular();
     //scoll event
     document.body.addEventListener("scroll", () => {
       let scrollTop =
@@ -107,6 +110,15 @@ export default {
       try {
         const response = await getMostRated();
         this.mostrated = response;
+      } catch (error) {
+        console.error(error);
+        // 处理错误
+      }
+    },
+    async fetchMostPopular() {
+      try {
+        const response = await getMostPopular();
+        this.mostpopular = response;
       } catch (error) {
         console.error(error);
         // 处理错误
