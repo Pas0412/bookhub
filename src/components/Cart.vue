@@ -14,6 +14,8 @@
           font-weight: 700;
           font-size: 30px;
           line-height: 40px;
+          border: solid 1px;
+          border-color: lightgrey;
         "
       >
         <img
@@ -46,9 +48,10 @@
       </van-cell>
     </van-list>
     <van-submit-bar
-      v-if="cartProducts.length > 0"
+      v-if="cartList.length > 0"
       :price="cartTotal.toFixed(2)"
       button-text="Checkout"
+      @click="goToPay"
     />
   </div>
 </template>
@@ -62,7 +65,6 @@ export default {
   data() {
     return {
       user_id: -1,
-      cartProducts: [],
       cartList: [],
     };
   },
@@ -97,6 +99,10 @@ export default {
       await removeCartList({ user_id: this.user_id, book_id: product.book_id });
       this.refreshPage();
     },
+    async removeAll(){
+      await removeCartList({ user_id: this.user_id, book_id: -1 });
+      this.refreshPage();
+    },
     goToProductDetails(id) {
       this.$nextTick(() => {
         console.log("id:" + id);
@@ -120,6 +126,10 @@ export default {
         count: event,
       });
     },
+    goToPay() {
+        this.removeAll();
+        alert('Payment success!');
+    }
   },
 };
 </script>
@@ -128,5 +138,10 @@ export default {
   height: 170px;
   width: 120px;
   margin-bottom: 70px;
+}
+
+.remove-from-cart-btn {
+  margin-left: 20px;
+  transform: translateY(-7px);
 }
 </style>

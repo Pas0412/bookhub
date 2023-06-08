@@ -21,6 +21,7 @@
         >
           <van-sidebar-item title="cart">Cart</van-sidebar-item>
           <van-sidebar-item title="favorites">Favorites</van-sidebar-item>
+          <van-sidebar-item title="history">History</van-sidebar-item>
         </van-sidebar>
       </div>
       <div class="content">
@@ -56,6 +57,9 @@ export default {
       } else if (activeName === 1) {
         this.active = 1;
         this.$router.push({ path: "/user/favorite" });
+      } else if (activeName === 2) {
+        this.active = 2;
+        this.$router.push({ path: "/user/history" });
       }
     },
     handleLogout() {

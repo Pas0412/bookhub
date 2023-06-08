@@ -7,6 +7,7 @@ import Favorite from '@/components/Favorite.vue'
 import Search from '@/views/Search.vue'
 import Detail from '@/views/Detail.vue'
 import Signup from '@/views/Signup.vue'
+import Bought from '@/components/Bought.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -59,6 +60,11 @@ const router = createRouter({
           name: 'favorite',
           component: Favorite,
         },
+        {
+          path: 'history',
+          name: 'history',
+          component: Bought
+        }
       ],
     },
   ]

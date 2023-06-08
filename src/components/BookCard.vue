@@ -7,7 +7,7 @@
         <div class="book-name">{{ book.title }}</div>
         <div class="book-author">{{ book.author }}</div>
         <div class="book-category">{{ book.category }}</div>
-        <div class="book-price">{{ 'Price: ' + book.price }}</div>
+        <div class="book-price">{{ 'Price: $' + book.price}}</div>
       </div>
     </div>
   </template>
@@ -28,6 +28,7 @@
           console.log(this.book.bookId)
           localStorage.setItem('detail', this.book.bookId);
           this.$router.push({ name: 'detail'});
+          location.reload();
         });
       }
     }

@@ -9,7 +9,9 @@
     </div>
     <div class="title-result">Search Result</div>
     <books :books="booklist"></books>
-    <el-button type="primary" plain @click="showMore" style="width: 100px;margin: 30px 0;">show more</el-button>
+    <el-empty description="Sorry, there is no result" v-show="isResultEmpty"/>
+    <div v-show="isButtonDisabled" style="margin-top: 20px;">No more results</div>
+    <el-button v-show="!isResultEmpty" :disabled="isButtonDisabled" type="primary" plain @click="showMore" style="width: 100px;margin: 30px 0;">show more</el-button>
   </div>
 </template>
 <script setup>
@@ -32,18 +34,29 @@ const fetchData = async (n) => {
 
       // 更新数据
       booklist.value = response;
+      if(booklist.value.length == 0){
+        isResultEmpty.value = true;
+      }else{
+        isResultEmpty.value = false;
+      }
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
 const booklist = ref([]);
+const isResultEmpty = ref(false);
+const isButtonDisabled = ref(false);
 
 var n = 12;
 
 const showMore = () => {
   n += 12;
+  let len = booklist.value.length
   fetchData(n);
+  if (booklist.value.length == len){
+    isButtonDisabled.value = true
+  }
 }
 
 const handleChange = () => {

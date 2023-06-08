@@ -20,7 +20,7 @@
         <h1>{{ product.title }}</h1>
         <p>{{ product.category }}</p>
         <p>Author: {{ product.author }}</p>
-        <p>Price: {{ product.price }}</p>
+        <p>Price: ${{ product.price }}</p>
         <el-rate
           v-model="value"
           disabled
@@ -40,7 +40,10 @@
         @click="handleLike"
       />
     </div>
+    <div class="title-recommend">Detail about this book</div>
+    <img :src=product.img_l alt="pic" style="height: 1000px; width: 800px;"/>
     <div class="title-recommend">Recommendations based on this book</div>
+    <el-table v-loading="booklist" v-show="!isLoaded"></el-table>
     <Books :books="booklist"></Books>
   </div>
 </template>
@@ -69,6 +72,7 @@ export default {
       value: 3.7,
       colors: ["#99A9BF", "#F7BA2A", "#FF9900"],
       like: 0,
+      isLoaded: false
     };
   },
   mounted() {
@@ -144,6 +148,7 @@ export default {
       try {
         const response = await getRecommendByBook({ book_id: book });
         this.booklist = response;
+        this.isLoaded = true;
       } catch (error) {
         console.error(error);
         // 处理错误
@@ -209,12 +214,15 @@ export default {
 
 .product-container {
   width: 80%;
-  height: 400px;
+  // height: 400px;
   margin: 70px 0px;
+  padding: 50px 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   gap: 30px;
+  background-color: lightblue;
+  overflow: hidden;
 }
 .product-container img {
   width: 220px;
@@ -239,6 +247,6 @@ export default {
   display: flex;
   width: 100%;
   justify-content: flex-start;
-  margin: 0 0 50px 170px;
+  margin: 20px 0 50px 170px;
 }
 </style>
