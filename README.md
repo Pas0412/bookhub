@@ -3,7 +3,7 @@ https://pas0412.github.io/bookhub/#/home
 
 Author : [![](https://img.shields.io/badge/@Pas0412-grey)](https://github.com/Pas0412)
 
-Project of DS50 UTBM 2023 ：Web e-commerce with recommandation algorithm
+Project of DS50 UTBM 2023 ：Web e-commerce with recommandation algorithm (KNN)
 
 ![](https://img.shields.io/badge/IDE-VSCODE-007ACC?style=flat&logo=visual-studio-code)
 ![](https://img.shields.io/badge/Platform-MacOS&emsp;Ventura&emsp;13.0.1-000000?style=flat&logo=apple)
@@ -15,6 +15,7 @@ Project of DS50 UTBM 2023 ：Web e-commerce with recommandation algorithm
 ![](https://img.shields.io/badge/Pinia-v2.0.34-yellow?style=for-the-badge&logo=pinia)
 ![](https://img.shields.io/badge/Vant-v4.1.0-lightblue?style=for-the-badge&logo=vant)
 ![](https://img.shields.io/badge/Less-v4.1.3-1D365D?style=for-the-badge&logo=less)
+![](https://img.shields.io/badge/Element+-v2.3.5-lightblue?style=for-the-badge&logo=e)
 
 ## START PROJECT:
 
@@ -33,8 +34,30 @@ npm run build
 ## PAGE
 
 ###  HOME PAGE
+    - most popular
+    - most rated
+    - books by category
 
-### USER PAGE
+###  USER PAGE
+    - cart
+    - favorite
+    - history
+
+###  DETAIL PAGE
+    - info
+    - detail
+    - recommendation based on this book
+
+###  SEARCH PAGE
+    - search results
+    
+###  SIGN UP PAGE
+    - username
+    - password
+
+###  LOG IN PAGE
+    - username
+    - password
 
 ## DEPENDENCIES
 ``` bash
@@ -49,6 +72,9 @@ npm install pinia -D
 
 # vant
 npm i vant
+
+# element-plus
+npm install element-plus --save
 
 npm install lib-flexible --save
 ```
