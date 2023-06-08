@@ -10,6 +10,19 @@
         <book-card :book="book" />
       </div>
     </div>
+    <el-empty description="Sorry, there is no result" v-show="isResultEmpty" />
+    <div v-show="isButtonDisabled" style="margin-top: 20px">
+      No more results
+    </div>
+    <el-button
+      v-show="!isResultEmpty"
+      :disabled="isButtonDisabled"
+      type="primary"
+      plain
+      @click="showMore"
+      style="width: 100px; margin: 30px 0; z-index: 1"
+      >show more</el-button
+    >
   </div>
 </template>
 
@@ -30,14 +43,33 @@ export default {
   data() {
     return {
       booksByCategory: [],
+      nb: 20,
+      isButtonDisabled: false,
+      isResultEmpty: false,
     };
   },
   methods: {
-    async fetchAllBooks() {
+    showMore() {
+      this.nb += 10;
+      let len = this.booksByCategory.length;
+      this.fetchAllBooks(len);
+    },
+    async fetchAllBooks(len) {
       try {
         console.log(this.category);
-        const response = await getAllBooks({category: this.category});
+        const response = await getAllBooks({
+          category: this.category,
+          nb: this.nb,
+        });
         this.booksByCategory = response;
+        if (this.booksByCategory.length == 0) {
+          this.isResultEmpty = true;
+        } else {
+          this.isResultEmpty = false;
+        }
+        if (this.booksByCategory.length == len) {
+          this.isButtonDisabled = true;
+        }
       } catch (error) {
         console.error(error);
         // 处理错误
@@ -52,8 +84,10 @@ export default {
 
 <style scoped>
 .book-list-container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 100px;
 }
 
 .book-title {
