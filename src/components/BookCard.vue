@@ -28,7 +28,7 @@
           console.log(this.book.bookId)
           localStorage.setItem('detail', this.book.bookId);
           this.$router.push({ name: 'detail'});
-          location.reload();
+          setTimeout(() => {this.$router.go(0);},500);
         });
       }
     }

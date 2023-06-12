@@ -106,7 +106,7 @@ export default {
 
 .recommand-list {
   display: flex;
-  width: 100%;
+  width: 110%;
   justify-content: flex-start;
   align-items: center;
   /* overflow: hidden; */

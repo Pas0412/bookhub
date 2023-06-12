@@ -24,10 +24,8 @@
 </template>
 
 <script>
-// import { useRouter } from "vue-router";
 import swiper from "@/components/Swiper.vue";
-// const router = useRouter();
-import Recommand from "../components/Recommond.vue";
+import Recommand from "../components/Recommend.vue";
 import BookTab from "../components/BookTab.vue";
 import picture from "/src/assets/4.jpeg";
 import picture2 from "/src/assets/5.jpeg";
